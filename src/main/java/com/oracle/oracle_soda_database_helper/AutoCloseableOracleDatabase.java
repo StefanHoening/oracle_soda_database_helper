@@ -13,7 +13,8 @@ import oracle.soda.rdbms.OracleRDBMSClient;
  * An {@code AutoCloseableOracleDatabase} wraps around an {@code OracleDatabase}
  * instance and its underlying {@code Connection}, as an {@code AutoCloseable}.
  */
-public class AutoCloseableOracleDatabase implements OracleDatabase, AutoCloseable {
+public final class AutoCloseableOracleDatabase
+        implements OracleDatabase, AutoCloseable {
     
     private final OracleDatabase oracleDatabase;
     private final Connection connection;
@@ -23,7 +24,7 @@ public class AutoCloseableOracleDatabase implements OracleDatabase, AutoCloseabl
         connection = theConnection;
         OracleRDBMSClient client = new OracleRDBMSClient();
         oracleDatabase = client.getDatabase(connection);
-    }    
+    }
     
     @Override
     public OracleCollection openCollection(String string) throws OracleException {
