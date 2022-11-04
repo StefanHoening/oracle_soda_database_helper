@@ -1,5 +1,6 @@
 package com.oracle.oracle_soda_database_helper;
 
+import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -16,21 +17,41 @@ public final class OracleDatabaseTemplate {
         provider = theProvider;
     }
     
-    public void executeConsumer(final Consumer<OracleDatabase> consumer) throws Exception {
+    public void executeConsumer(
+            final Consumer<OracleDatabase> consumer) throws Exception {
         try (AutoCloseableOracleDatabase db = provider.getOracleDatabase()) {
             consumer.accept(db);
+        } catch (TemplateTransportException tte) {
+            throw tte.getTransported();
         }
     }
     
-    public <T> T executeFunction(final Function<OracleDatabase, T> function) throws Exception {
+    public <U> void executeBiConsumer(
+            final BiConsumer<OracleDatabase, U> consumer, final U arg)
+            throws Exception {
+        try (AutoCloseableOracleDatabase db = provider.getOracleDatabase()) {
+            consumer.accept(db, arg);
+        } catch (TemplateTransportException tte) {
+            throw tte.getTransported();
+        }
+    }
+    
+    public <R> R executeFunction(final Function<OracleDatabase, R> function)
+            throws Exception {
         try (AutoCloseableOracleDatabase db = provider.getOracleDatabase()) {
             return function.apply(db);
+        } catch (TemplateTransportException tte) {
+            throw tte.getTransported();
         }
     }
     
-    public <T, R> R executeBiFunction(final BiFunction<OracleDatabase, T, R> function, final T arg) throws Exception {
+    public <U, R> R executeBiFunction(
+            final BiFunction<OracleDatabase, U, R> function, final U arg)
+            throws Exception {
         try (AutoCloseableOracleDatabase db = provider.getOracleDatabase()) {
             return function.apply(db, arg);
+        } catch (TemplateTransportException tte) {
+            throw tte.getTransported();
         }
     }
     
