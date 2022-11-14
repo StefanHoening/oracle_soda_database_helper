@@ -50,6 +50,12 @@ public class DataSourceBuilder<T extends DataSourceBuilder> {
         return (T) this;
     }
     
+    public final T autoCommit(final boolean autoCommit) {
+        LOGGER.debug("autoCommit({})", autoCommit);
+        result.setAutoCommit(autoCommit);
+        return (T) this;
+    }
+    
     public final T dataSourceProperty(
             final String propertyName, final String propertyValue) {
         LOGGER.debug("dataSourceProperty({}, {})",

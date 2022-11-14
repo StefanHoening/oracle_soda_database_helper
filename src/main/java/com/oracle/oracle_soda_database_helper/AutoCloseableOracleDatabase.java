@@ -1,12 +1,14 @@
 package com.oracle.oracle_soda_database_helper;
 
 import java.sql.Connection;
-import oracle.soda.OracleCollection;
+import java.sql.SQLException;
 
+import oracle.soda.OracleCollection;
 import oracle.soda.OracleDatabase;
 import oracle.soda.OracleDatabaseAdmin;
 import oracle.soda.OracleDocument;
 import oracle.soda.OracleException;
+
 import oracle.soda.rdbms.OracleRDBMSClient;
 
 /**
@@ -27,7 +29,8 @@ public final class AutoCloseableOracleDatabase
     }
     
     @Override
-    public OracleCollection openCollection(String string) throws OracleException {
+    public OracleCollection openCollection(final String string)
+            throws OracleException {
         return oracleDatabase.openCollection(string);
     }
 
@@ -37,47 +40,61 @@ public final class AutoCloseableOracleDatabase
     }
 
     @Override
-    public OracleDocument createDocumentFromString(String string) throws OracleException {
+    public OracleDocument createDocumentFromString(final String string)
+            throws OracleException {
         return oracleDatabase.createDocumentFromString(string);
     }
 
     @Override
-    public OracleDocument createDocumentFromString(String string, String string1) throws OracleException {
+    public OracleDocument createDocumentFromString(
+            final String string, final String string1) throws OracleException {
         return oracleDatabase.createDocumentFromString(string, string1);
     }
 
     @Override
-    public OracleDocument createDocumentFromString(String string, String string1, String string2) throws OracleException {
+    public OracleDocument createDocumentFromString(
+            final String string, final String string1, final String string2)
+            throws OracleException {
         return oracleDatabase.createDocumentFromString(string, string1, string2);
     }
 
     @Override
-    public OracleDocument createDocumentFrom(Object o) throws OracleException {
+    public OracleDocument createDocumentFrom(final Object o)
+            throws OracleException {
         return oracleDatabase.createDocumentFrom(o);
     }
 
     @Override
-    public OracleDocument createDocumentFrom(String string, Object o) throws OracleException {
+    public OracleDocument createDocumentFrom(
+            final String string, final Object o) throws OracleException {
         return oracleDatabase.createDocumentFrom(string, o);
     }
 
     @Override
-    public OracleDocument createDocumentFromByteArray(byte[] bytes) throws OracleException {
+    public OracleDocument createDocumentFromByteArray(
+            final byte[] bytes) throws OracleException {
         return oracleDatabase.createDocumentFromByteArray(bytes);
     }
 
     @Override
-    public OracleDocument createDocumentFromByteArray(String string, byte[] bytes) throws OracleException {
+    public OracleDocument createDocumentFromByteArray(
+            final String string, final byte[] bytes) throws OracleException {
         return oracleDatabase.createDocumentFromByteArray(string, bytes);
     }
 
     @Override
-    public OracleDocument createDocumentFromByteArray(String string, byte[] bytes, String string1) throws OracleException {
+    public OracleDocument createDocumentFromByteArray(
+            final String string, final byte[] bytes, final String string1)
+            throws OracleException {
         return oracleDatabase.createDocumentFromByteArray(string, bytes, string1);
+    }
+    
+    public void commit() throws SQLException {
+        connection.commit();
     }
 
     @Override
-    public void close() throws Exception {
+    public void close() throws SQLException {
         connection.close();
     }
     
